@@ -7,3 +7,29 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#left{
+    text-align: left;
+    width: 30%;
+    display: inline-block;
+    margin-right: 3%;
+    margin-left: 1%;
+    color: black;
+    font-size: 150%;
+}
+#center{
+    text-align: center;
+    width: 30%;
+    display: inline-block;
+    margin-right: 3%;
+    color: black;
+    font-size: 150%;
+}
+#right{
+    text-align: right;
+    width: 30%;
+    display: inline-block;
+    margin-right: 2%;
+    color: black;
+    font-size: 150%;
+}
