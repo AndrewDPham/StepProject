@@ -4,18 +4,55 @@
     <meta charset="UTF-8">
     <title>Andrew Pham | Home</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js">
-        
-    </script>
+   
   </head>
   <body>
     <div id="content">
-      <h1> Andrew Portfolio</h1>
+      <h1>Andrew Portfolio</h1>
       <h3>Hello! My name is Andrew Pham and I am a second year at the University of California San Diego. I grew up with a family of six: two parents, an older brother and sister, <br>
             and a younger brother. My favorite color is purple and the type of music I like to listen to is Kchill and lofi.<h3>
       <p>This is my portfolio.</p>
     </div>
 
+    <br> <br> <br> <br>
+
+        <button type="button" class="collapse" style="background-color: #ea4f5e;">Bolbbalgan4</button>
+        <div class="contentInCollapse">
+            <div id = "imageInCollapse">
+                <img src="/images/bol4.jpeg" width="100%">
+            </div>
+        </div>
+        <button type="button" class="collapse" style="background-color: #f6c348;">Heize</button>
+        <div class="contentInCollapse">
+            <div id = "imageInCollapse">
+                <img src="/images/heize.png" width="100%">
+            </div>
+        </div>
+        <button type="button" class="collapse" style="background-color: #42e769;">DPR Live</button>
+        <div class="contentInCollapse">
+            <div id = "imageInCollapse">
+                <img src="/images/dpr-live.jpg" width="100%">
+            </div>
+        </div>
+        <button type="button" class="collapse" style="background-color: #4e73f4;">Dean</button>
+        <div class="contentInCollapse">
+            <div id = "imageInCollapse">
+                <img src="/images/dean.png" width="100%">
+            </div>
+        </div>
+        <button type="button" class="collapse" style="background-color: #d965f9;">IU</button>
+        <div class="contentInCollapse">
+            <div id = "imageInCollapse">
+                <img src="/images/iu.webp" width="100%">
+            </div>
+        </div>
+
+
+
+
+
+
+    <!--
       <div id="left">
         <img src="/images/me.jpg" width="100%">
       </div>
@@ -28,5 +65,24 @@
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
+      -->
   </body>
+
+ <script>
+        var coll = document.getElementsByClassName("collapse");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+          this.classList.toggle("active");
+          var content = this.nextElementSibling;
+          if (content.style.display === "block") {
+             content.style.display = "none";
+           } else {
+             content.style.display = "block";
+           }
+         });
+        }
+    </script>
+
 </html>

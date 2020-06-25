@@ -12,6 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var coll = document.getElementsByClassName("firstCollapse");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+
+
 /**
  * Adds a random greeting to the page.
  */
@@ -26,3 +43,5 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+

@@ -8,28 +8,36 @@
   margin-top: 20px;
 }
 
-#left{
+.collapse {
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 36px;
+  transition: max-height 0.2s ease-out;
+}
+
+.contentInCollapse {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+#imageInCollapse{
     text-align: left;
-    width: 30%;
+    width: 33%;
     display: inline-block;
     margin-right: 3%;
     margin-left: 1%;
     color: black;
     font-size: 150%;
 }
-#center{
-    text-align: center;
-    width: 30%;
-    display: inline-block;
-    margin-right: 3%;
-    color: black;
-    font-size: 150%;
+
+.active, .collapse:hover {
+  filter: brightness(125%);
 }
-#right{
-    text-align: right;
-    width: 30%;
-    display: inline-block;
-    margin-right: 2%;
-    color: black;
-    font-size: 150%;
-}
+
