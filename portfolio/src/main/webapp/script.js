@@ -44,6 +44,10 @@ function addRandomGreeting() {
   greetingContainer.innerText = greeting;
 }
 
+
+
+
+
 function addRandomSong() {
 
     const songs = new Map();
