@@ -4,85 +4,107 @@
     <meta charset="UTF-8">
     <title>Andrew Pham | Home</title>
     <link rel="stylesheet" href="style.css">
-   
   </head>
   <body>
-    <div id="content">
-      <h1>Andrew Portfolio</h1>
-      <h3>Hello! My name is Andrew Pham and I am a second year at the University of California San Diego. I grew up with a family of six: two parents, an older brother and sister, <br>
-            and a younger brother. My favorite color is purple and the type of music I like to listen to is Kchill and lofi.<h3>
-      <p>This is my portfolio.</p>
+    <div id="first">
+        <div id="first-align">
+            <img src="/images/squad.jpg"  id="cover" width= "100%">
+        </div>
+        <div id="first-content">
+            <h1> Andrew Pham </h1>
+            <hr>
+            <p> Hello! My name is Andrew Pham and I am a second year at the University of California San Diego. I grew up with a family of six: two parents, an older brother and sister, 
+            and a younger brother. My favorite color is purple and the type of music I like to listen to is Kchill and lofi.</p>
+
+            <p>
+                Below are some custom made Iphone wall papers that reflect my favorite K-pop artists!
+            </p>
+        </div>
     </div>
 
-    <br> <br> <br> <br>
-
-        <button type="button" class="collapse" style="background-color: #ea4f5e;">Bolbbalgan4</button>
-        <div class="contentInCollapse">
-            <div id = "imageInCollapse">
-                <img src="/images/bol4.jpeg" width="100%">
-            </div>
-        </div>
-        <button type="button" class="collapse" style="background-color: #f6c348;">Heize</button>
-        <div class="contentInCollapse">
-            <div id = "imageInCollapse">
-                <img src="/images/heize.png" width="100%">
-            </div>
-        </div>
-        <button type="button" class="collapse" style="background-color: #42e769;">DPR Live</button>
-        <div class="contentInCollapse">
-            <div id = "imageInCollapse">
-                <img src="/images/dpr-live.jpg" width="100%">
-            </div>
-        </div>
-        <button type="button" class="collapse" style="background-color: #4e73f4;">Dean</button>
-        <div class="contentInCollapse">
-            <div id = "imageInCollapse">
-                <img src="/images/dean.png" width="100%">
-            </div>
-        </div>
-        <button type="button" class="collapse" style="background-color: #d965f9;">IU</button>
-        <div class="contentInCollapse">
-            <div id = "imageInCollapse">
-                <img src="/images/iu.webp" width="100%">
-            </div>
-        </div>
-
-
-
-
-
-
-    <!--
-      <div id="left">
-        <img src="/images/me.jpg" width="100%">
-      </div>
-      <div id="center">
-      <img src="/images/Stephanie'sgrad.jpg" width="100%">
-      </div>
-      <div id="right">
-      <img src="/images/Yosemite.jpg" width="100%">
-      </div>
+      <!--
       <p>Click here to get a random message:</p>
       <button onclick="addRandomGreeting()">Hello</button>
       <div id="greeting-container"></div>
-      -->
-  </body>
+        -->
 
- <script>
+
+    <br>
+        <div class="test">
+        <button type="button" class="collapse" style="background-color: #6779ba;">BTS - Euphoria</button>
+        <div class="contentInCollapse" style="background-color: rgba(101,121,186,.65);">
+            <div class = "imageInCollapse">
+                <a href="/images/BTS.png" download="BTS.png"> <img src="/images/BTS.png" width="100%"> </a>
+            </div>
+        </div>
+        </div>
+        <div class="test">
+        <button type="button" class="collapse" style="background-color: #013f81;">Bolbbalgan4 - Galaxy</button>
+        <div class="contentInCollapse" style="background-color: rgba(1,63,129,.65);">
+            <div class = "imageInCollapse">
+                <a href="/images/Bol4.png" download="Bol4.png"> <img src="/images/Bol4.png" width="100%"> </a>
+            </div>
+        </div>
+        </div>
+        <div class="test">
+        <button type="button" class="collapse" style="background-color: #7cccc2;">Heize x Dean - And July</button>
+        <div class="contentInCollapse" style="background-color: rgba(124,204, 194,.65)">
+            <div class = "imageInCollapse">
+                <a href="/images/AndJuly.png" download="AndJuly.png"> <img src="/images/AndJuly.png" width="100%"> </a>
+            </div>
+        </div>
+        </div>
+        <div class="test">
+        <button type="button" class="collapse" style="background-color: #6f38a4;">IU - Palette</button>
+        <div class="contentInCollapse" style="background-color: rgba(111, 56, 164,.65);">
+            <div class = "imageInCollapse">
+                <a href="/images/IU.jpg" download="IU.jpg"> <img src="/images/IU.jpg" width="100%"> </a>
+            </div>
+        </div>
+        </div>
+        <div class="test">
+        <button type="button" class="collapse" style="background-color: #808366;">Zico - She's a Baby</button>
+        <div class="contentInCollapse" style="background-color: rgba(128, 131, 102,.65);">
+            <div class = "imageInCollapse">
+                <a href="/images/Zico.png" download="Zico.png"> <img src="/images/Zico.png" width="100%">  </a>
+            </div>
+        </div>
+        </div>
+
+
+      <script>
         var coll = document.getElementsByClassName("collapse");
         var i;
 
         for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-          this.classList.toggle("active");
-          var content = this.nextElementSibling;
-          if (content.style.display === "block") {
-             content.style.display = "none";
-           } else {
-             content.style.display = "block";
-           }
-         });
+            coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "table") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "table";
+            }
+            });
         }
-    </script>
+    /*
+    function addRandomSong() {
 
+        const songs = new Map();
+
+        songs.set("Bol4", "Some");
+
+        const songToAdd = songs.get("Bol4");
+
+        console.log(songToAdd);
+        console.log(map.size);
+
+        alert(songToAdd)
+
+    const greetingContainer = document.getElementById('greeting-container');
+    greetingContainer.innerText = songToAdd;
+
+    } */
+    </script>
+  </body>
 </html>

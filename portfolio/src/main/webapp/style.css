@@ -1,3 +1,8 @@
+@font-face{
+    font-family: Tribal;
+    src: url(fonts/Tribal_Box.ttf);
+}
+
 #content {
   margin-left: auto;
   margin-right: auto;
@@ -8,36 +13,131 @@
   margin-top: 20px;
 }
 
+#first{
+    width: 100%;
+    color: black;
+    background-color: #d3d3d3;
+}
+
+#first-content{
+    text-align: left;
+    width: 47%;
+    display: inline-block;
+    float: right;
+}
+
+#first-align{
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+}
+
+#nav {
+    background-color: #fff;
+    padding: -30px;
+    list-style-type: none;
+}
+
+#top {
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: -10px;
+    margin-left: -10px;
+    margin-bottom: -10px;
+    margin-right: -20px;
+    opacity: .9;
+}
+
+li a {
+    display: block;
+    font-family: "Cool";
+    font-size: 40px;
+    color: grey;
+    text-align: right;
+    margin-top: 65px;
+    padding-right: 20px;
+    text-decoration: none;
+    background-color: #ffffff;
+    float: left;
+}
+
+li a:hover {
+    color: black;
+}
+
+
+
 .collapse {
   color: white;
   cursor: pointer;
-  padding: 18px;
-  width: 100%;
   border: none;
+  width: 100%;
   text-align: left;
   outline: none;
-  font-size: 36px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: inline-block;
+  padding: 12px;
+  font-size: 24px;
   transition: max-height 0.2s ease-out;
+  border-radius: 25px 25px 0px 0px;
 }
 
 .contentInCollapse {
-  padding: 0 18px;
   display: none;
   overflow: hidden;
-  background-color: #f1f1f1;
+  position: relative;
 }
 
-#imageInCollapse{
-    text-align: left;
-    width: 33%;
-    display: inline-block;
-    margin-right: 3%;
-    margin-left: 1%;
+.imageInCollapse{
+    text-align: center;
+    width: 90%;
+    display: inline-block; 
     color: black;
     font-size: 150%;
 }
 
-.active, .collapse:hover {
-  filter: brightness(125%);
+.test{
+    width: 19%;
+    display: inline-block;
+    text-align: center;
 }
 
+.active, .collapse:hover {
+  filter: brightness(110%);
+}
+
+.opened{
+    border-radius: 25px 25px 0px 0px;
+}
+
+.bg {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: .4;
+    width: 100%;
+    height: 100%;
+}
+
+
+#night {
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    width: 100%;
+    height: 100px;
+}
+
+
+#intro{
+    color: white;
+    text-align: center;
+    font-family: "Tribal";
+    font-size: 280px;
+    padding: -10px;
+    margin-top: 180px;
+}
