@@ -18,6 +18,9 @@
             <p>
                 Below are some custom made Iphone wall papers that reflect my favorite K-pop artists! Click on the image to download them!
             </p>
+
+            <button type="button" onclick="getHelloName()"> Grab a quote </button> 
+            <div id="quote-container"></div>
         </div>
     </div>
 
@@ -63,22 +66,7 @@
             </div>
         </div>
 
-    <script>
-        var coll = document.getElementsByClassName("collapse");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            var content = this.nextElementSibling;
-            if (content.style.display === "table") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "table";
-            }
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 
   </body>
 

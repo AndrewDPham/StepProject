@@ -12,19 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-var coll = document.getElementsByClassName("firstCollapse");
+
+var coll = document.getElementsByClassName("collapse");
 var i;
 
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "table") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "table";
+        }
+    });
     }
-  });
+
+function getHelloName(){
+    
+    console.log("Fetching Hello [NAME]");
+
+    const responsePromise = fetch("/data");
+
+    responsePromise.then(HandleResponse);
+}
+
+function HandleResponse(response){
+
+    console.log("Handling Response");
+
+    const textPromise = response.text();
+
+    textPromise.then(addQuoteToDOM);
+}
+
+function addQuoteToDOM(quote){
+
+    console.log("Adding quote to DOM:" + quote);
+
+    const quoteContainer = document.getElementById('quote-container');
+    
+    quoteContainer.innerText = quote;
 }
 
 
@@ -48,18 +76,6 @@ function addRandomGreeting() {
 
 
 
-function addRandomSong() {
 
-    const songs = new Map();
-
-    songs.set("Bol4", "Some");
-
-    const songToAdd = songs.get("Bol4");
-
-    console.log(songToAdd);
-    console.log(map.size);
-
-    alert(songToAdd)
-}
 
 
