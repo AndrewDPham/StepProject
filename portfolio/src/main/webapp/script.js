@@ -41,7 +41,10 @@ function HandleResponse(response){
 
     console.log("Handling Response");
 
-    const textPromise = response.text();
+    console.log(response);
+    const textPromise = response.json();
+    console.log(response);
+//    const textPromise = response.text();
 
     textPromise.then(addQuoteToDOM);
 }
@@ -53,6 +56,17 @@ function addQuoteToDOM(quote){
     const quoteContainer = document.getElementById('quote-container');
     
     quoteContainer.innerText = quote;
+}
+
+function getJson(){
+    console.log("Grabbing Json");
+
+    fetch('/data').then(response => response.json()).then((messages) => {
+        console.log(messages);
+        const messagesListElement = document.getElementById('json-container');
+        console.log("Here");
+        messagesListElement.innerText = messages[0];
+    });
 }
 
 
