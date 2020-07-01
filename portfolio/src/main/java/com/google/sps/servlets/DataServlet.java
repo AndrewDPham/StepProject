@@ -27,46 +27,58 @@ import java.util.Arrays;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+    private Comment userComment;
+    private final ArrayList<String> comments = new ArrayList<>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ArrayList<String> messages = new ArrayList<String>();
-    messages.add("Alpha");
-    messages.add("Beta");
-    messages.add("Charlie");
     
-    String json = convertToJsonUsingGson(messages);
-
-    response.setContentType("application/json;");
+    Gson gson = new Gson();
+    String json = gson.toJson(comments);
+    response.setContentType("application/json");
     response.getWriter().println(json);
     
+    // Tutorial Steps Below:
+    // ArrayList<String> messages = new ArrayList<String>();
+    // messages.add("Alpha");
+    // messages.add("Beta");
+    // messages.add("Charlie");
+    
+    // String json = convertToJsonUsingGson(messages);
+
+    // response.setContentType("application/json");
+    // response.getWriter().println(json);
+
     //response.setContentType("text/html;");
     //response.getWriter().println("Hello Andrew");
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = getParameter(request, "text-input", "");
+    String name = getParameter(request, "name-input", "");
+    String content = getParameter(request, "text-input", "");
     boolean owo = Boolean.parseBoolean(getParameter(request, "owo", "false"));
     boolean uwu = Boolean.parseBoolean(getParameter(request, "uwu", "false"));
 
-    String[] commentWords = text.split(" ", 0);
-
+    String[] commentWords = content.split(" ", 0);
+    String commentConcatenated = "";
     for(String word : commentWords){
         if(owo){
             word += "owo";
         } else if (uwu){
-            word += "uwu"
+            word += "uwu";
         } 
+        commentConcatenated += word + " ";
     }
 
+    userComment = new Comment(name, commentConcatenated);
+    comments.add(userComment.getName() + " said " + userComment.getContent());
+    response.sendRedirect("/index.html");
 
+//    Tutorial Steps Below:
 //    response.setContentType("text/html");
 //    response.getWriter().println(Array.toString(commentWords));
-    response.sendRedirect("/index.html");
   }
 
-private String convertToJson(ArrayList<String> messages) {
-    return "Wrong";
-}
 
 private String convertToJsonUsingGson(ArrayList<String> messages) {
     Gson gson = new Gson();

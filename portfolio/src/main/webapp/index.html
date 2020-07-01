@@ -5,7 +5,7 @@
     <title>Andrew Pham | Home</title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body>
+  <body onload="grabComment()">
     <div id="first">
         <div id="first-align">
             <img src="/images/squad.jpg"  id="cover" width= "100%">
@@ -18,21 +18,27 @@
             </p>
             
             <form action="/data" method="POST">
+
+                <textarea name="name-input">Say your name!</textarea>
+                <textarea name="text-input">Say a comment!</textarea>
+                </br>
                 <input type="checkbox" name="uwu" value="true"> "uwu" translator
                 </br>
                 <input type="checkbox" name="owo" value="true"> "owo" translator
                 </br></br>
-                <input type="submit" />
+                <input type="submit"/>
             </form>
-
+            <div id="comment-container"> </div>
             <p>
                 Below are some custom made Iphone wall papers that reflect my favorite K-pop artists! Click on the image to download them!
             </p>
 
-            <button type="button" onclick="getHelloName()"> Grab a quote </button> 
-            <div id="quote-container"></div>
-            <button type="button" onclick="getJson()"> Grab the JSON token </button> 
-            <div id="json-container"></div>
+            <!-- Tutorial Steps:
+                <button type="button" onclick="getHelloName()"> Grab a quote </button> 
+                <div id="quote-container"></div>
+                <button type="button" onclick="getJson()"> Grab the JSON token </button> 
+                <div id="json-container"></div>
+            -->
         </div>
     </div>
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-
+//EventListener for buttons with dropdowns
 var coll = document.getElementsByClassName("collapse");
 var i;
 
@@ -27,7 +27,8 @@ var i;
         }
     });
     }
-
+// Tutorial Steps:    
+/*
 function getHelloName(){
     
     console.log("Fetching Hello [NAME]");
@@ -41,10 +42,7 @@ function HandleResponse(response){
 
     console.log("Handling Response");
 
-    console.log(response);
     const textPromise = response.json();
-    console.log(response);
-//    const textPromise = response.text();
 
     textPromise.then(addQuoteToDOM);
 }
@@ -68,7 +66,29 @@ function getJson(){
         messagesListElement.innerText = messages[0];
     });
 }
+*/
 
+/** Grabs the comment from the JSP and displays as a list in HTML */
+function grabComment(){
+    console.log("Grabbing Comment");
+    fetch("/data").then(response => response.json()).then((comment) => {
+        console.log(comment);
+        const commentElement = document.getElementById("comment-container");
+        console.log("Here");
+        comment.forEach((line) => {
+            commentElement.appendChild(createListElement(line)); 
+        });
+
+    });
+
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+    const liElement = document.createElement('li');
+    liElement.innerText = text;
+    return liElement;
+}   
 
 
 /**

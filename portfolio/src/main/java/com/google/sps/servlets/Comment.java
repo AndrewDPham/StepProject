@@ -20,7 +20,7 @@ public class Comment{
     }
 
     public String getName(){
-        return name;
+        return this.name;
     }
 
     public void setName(String newName){
@@ -28,11 +28,11 @@ public class Comment{
     }
 
     public String getContent(){
-        return content;
+        return this.content;
     }
 
     public void setContent(String newContent){
-        content = newContent
+        content = newContent;
     }
 
 }
