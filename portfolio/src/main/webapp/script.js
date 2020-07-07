@@ -13,83 +13,43 @@
 // limitations under the License.
 
 //EventListener for buttons with dropdowns
-var coll = document.getElementsByClassName("collapse");
-var i;
+let coll = document.getElementsByClassName("collapse");
+let i;
 
     for (i = 0; i < coll.length; i++) {
         coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "table") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "table";
-        }
-    });
+            this.classList.toggle("active");
+            let content = this.nextElementSibling;
+            if (content.style.display === "table") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "table";
+            }
+        });
     }
-// Tutorial Steps:    
-/*
-function getHelloName(){
-    
-    console.log("Fetching Hello [NAME]");
 
-    const responsePromise = fetch("/data");
-
-    responsePromise.then(HandleResponse);
-}
-
-function HandleResponse(response){
-
-    console.log("Handling Response");
-
-    const textPromise = response.json();
-
-    textPromise.then(addQuoteToDOM);
-}
-
-function addQuoteToDOM(quote){
-
-    console.log("Adding quote to DOM:" + quote);
-
-    const quoteContainer = document.getElementById('quote-container');
-    
-    quoteContainer.innerText = quote;
-}
-
-function getJson(){
-    console.log("Grabbing Json");
-
-    fetch('/data').then(response => response.json()).then((messages) => {
-        console.log(messages);
-        const messagesListElement = document.getElementById('json-container');
-        console.log("Here");
-        messagesListElement.innerText = messages[0];
-    });
-}
-*/
-
-/** Grabs the comment from the JSP and displays as a list in HTML */
+/**
+ * Grabs the comments from the JSP and displays as a list in HTML 
+ */
 function grabComment(){
     console.log("Grabbing Comment");
-    fetch("/data").then(response => response.json()).then((comment) => {
-        console.log(comment);
+    fetch("/data").then(response => response.json()).then((list) => {
+        console.log(list);
         const commentElement = document.getElementById("comment-container");
-        console.log("Here");
-        comment.forEach((line) => {
-            commentElement.appendChild(createListElement(line)); 
+        list.forEach((comment) => {
+            commentElement.appendChild(createListElement(comment.name + " said " + comment.content)); 
         });
-
     });
-
 }
 
-/** Creates an <li> element containing text. */
+/**
+ * Creates an <li> element containing text.
+ */
 function createListElement(text) {
     const liElement = document.createElement('li');
     liElement.innerText = text;
     return liElement;
 }   
-
 
 /**
  * Adds a random greeting to the page.
