@@ -1,9 +1,62 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+@font-face {
+    font-family: Tribal;
+    src: url(fonts/Tribal_Box.ttf);
 }
 
-#greeting-container {
-  margin-top: 20px;
+#intro {
+    color: black;
+    background-color: #d3d3d3;
+    width: 100%;
+}
+
+#intro-content{
+    text-align: left;
+    width: 47%;
+    float: right;
+}
+
+#intro-align{
+    text-align: left;
+    width: 50%;
+    display: inline-block;
+}
+
+.container{
+    text-align: center;
+    width: 19%;
+    display: inline-block;
+}
+
+.collapse {
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+    width: 100%;
+    outline: none;
+    margin-left: 0px;
+    margin-right: 0px;
+    display: inline-block;
+    padding: 12px;
+    font-size: 24px;
+    border-radius: 25px 25px 0px 0px;
+}
+
+.contentInCollapse {
+    display: none;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0px 0px 25px 25px;
+}
+
+.imageInCollapse {
+    color: black;
+    text-align: center;
+    width: 90%;
+    display: inline-block; 
+    font-size: 150%;
+}
+
+.active, .collapse:hover {
+    filter: brightness(110%);
 }

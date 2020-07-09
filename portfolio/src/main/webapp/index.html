@@ -1,18 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-  </head>
-  <body>
-    <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+            <title>Andrew Pham | Home</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body onload="grabComment()">
+        <div id="intro">
+            <div id="intro-align">
+                <img src="/images/squad.jpg"  id="cover" width= "100%">
+            </div>
+            <div id="intro-content">
+                <h1> Andrew Pham </h1>
+                <hr>
+                <p> Hello! My name is Andrew Pham and I am a second year at the University of California San Diego. I grew up with a family of six: two parents, an older brother and sister, 
+                and a younger brother. My favorite color is purple and the type of music I like to listen to is Kchill and lofi. Feel free to leave a comment!
+                </p>
+                <form action="/data" method="POST">
+                    <textarea name="name-input" placeholder="Say your name!"></textarea>
+                    <textarea name="text-input" placeholder="Say a comment!"></textarea>
+                    <textarea name="num-input" col="2" placeholder="Default amount of comments: 3"></textarea>
+                    </br>
+                    <input type="checkbox" name="uwu" value="true"> "uwu" translator
+                    </br>
+                    <input type="checkbox" name="owo" value="true"> "owo" translator
+                    </br></br>
+                    <input type="submit"/>
+                </form>
+                <form action="/delete-comment" method="POST">
+                    <input type="submit" value="Delete all comments">
+                </form>
+                <div id="comment-container"></div>
+                <p>
+                    Below are some custom made Iphone wall papers that reflect my favorite K-pop artists! Click on the image to download them!
+                </p>
+            </div>
+        </div>
+        <br>
+        <div class="container">
+            <button type="button" class="collapse" id="bts-button">BTS - Euphoria</button>
+            <div class="contentInCollapse" id="bts-content">
+                <div class = "imageInCollapse">
+                    <a href="/images/BTS.png" download="BTS.png"> <img src="/images/BTS.png" width="100%"> </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="collapse" id="bol4-button">Bolbbalgan4 - Galaxy</button>
+            <div class="contentInCollapse" id="bol4-content">
+                <div class = "imageInCollapse">
+                    <a href="/images/Bol4.png" download="Bol4.png"> <img src="/images/Bol4.png" width="100%"> </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="collapse" id="andjuly-button">Heize x Dean - And July</button>
+            <div class="contentInCollapse" id="andjuly-content">
+                <div class = "imageInCollapse">
+                    <a href="/images/AndJuly.png" download="AndJuly.png"> <img src="/images/AndJuly.png" width="100%"> </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="collapse" id="iu-button">IU - Palette</button>
+            <div class="contentInCollapse" id="iu-content">
+                <div class = "imageInCollapse">
+                    <a href="/images/IU.jpg" download="IU.jpg"> <img src="/images/IU.jpg" width="100%"> </a>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <button type="button" class="collapse" id="zico-button">Zico - She's a Baby</button>
+            <div class="contentInCollapse" id="zico-content">
+                <div class = "imageInCollapse">
+                    <a href="/images/Zico.png" download="Zico.png"> <img src="/images/Zico.png" width="100%">  </a>
+                </div>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
 </html>
