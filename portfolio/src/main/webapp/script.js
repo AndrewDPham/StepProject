@@ -43,6 +43,44 @@ function grabComment(){
 }
 
 /**
+ * Fetches Blob
+ */
+function fetchBlobstoreUrlAndDisplayMemePosts() {
+    fetch('/blobstore-upload-url')
+        .then((response) => {
+            return response.text();
+        })
+        .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('my-form');
+            messageForm.action = imageUploadUrl;
+        });
+
+    fetch("/display-memepost")
+        .then((response) => {
+            return response.json();
+        })
+        .then((list) => {
+            console.log(list);
+            const memepostElement = document.getElementById("memepost-container");
+            list.forEach((memepost) => {
+                memepostElement.appendChild(createContainer(memepost.imageUrl)); 
+            });
+        });
+
+}
+
+function createContainer(url) {
+    //const liElement = document.createElement("li");
+    const imgElement = document.createElement("img");
+    imgElement.src = url;
+    return imgElement;
+    //liElement.innerText = "WORKS HERE";
+}
+
+
+
+
+/**
  * Creates an <li> element containing text.
  */
 function createListElement(text) {

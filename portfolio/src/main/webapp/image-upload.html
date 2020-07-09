@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+            <title>Andrew Pham | Images</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body onload="fetchBlobstoreUrlAndDisplayMemePosts()">
+        <form id="my-form" enctype="multipart/form-data" method="POST">
+            <p> Say a Description </p>
+            <textarea name="description-input" placeholder="Description"></textarea>
+            </br>
+            <p>Upload an image:</p>
+            <input type="file" name="image-input">
+            <br/><br/>
+            <input type="submit"/>
+            <div id="memepost-container"></div>
+        </form>
+        <script src="script.js"></script>
+    </body>
+</html>

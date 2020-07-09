@@ -28,6 +28,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.Comment;
+import com.google.sps.data.MemePost;
 
 /** 
  * The DataServlet is the servlet which handles GET and POST requests to display 
@@ -96,7 +98,7 @@ public class DataServlet extends HttpServlet {
                 word += "owo";
             } else if (uwu){
                 word += "uwu";
-            } 
+            }
             commentConcatenated += word + " ";
         }
 
