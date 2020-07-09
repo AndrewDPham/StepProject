@@ -16,17 +16,17 @@
 let coll = document.getElementsByClassName("collapse");
 let i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            let content = this.nextElementSibling;
-            if (content.style.display === "table") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "table";
-            }
-        });
-    }
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "table") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "table";
+        }
+    });
+}
 
 /**
  * Grabs the comments from the JSP and displays as a list in HTML 
@@ -42,9 +42,6 @@ function grabComment(){
     });
 }
 
-/**
- * Fetches Blob
- */
 function fetchBlobstoreUrlAndDisplayMemePosts() {
     fetch('/blobstore-upload-url')
         .then((response) => {
@@ -70,15 +67,10 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
 }
 
 function createContainer(url) {
-    //const liElement = document.createElement("li");
     const imgElement = document.createElement("img");
     imgElement.src = url;
     return imgElement;
-    //liElement.innerText = "WORKS HERE";
 }
-
-
-
 
 /**
  * Creates an <li> element containing text.
