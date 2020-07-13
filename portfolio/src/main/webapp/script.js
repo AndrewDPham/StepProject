@@ -72,7 +72,7 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
             console.log(list);
             const memepostElement = document.getElementById("memepost-container");
             list.forEach((memepost) => {
-                memepostElement.appendChild(createContainer(memepost.imageUrl)); 
+                memepostElement.appendChild(createImageContainer(memepost)); 
             });
         });
 }
@@ -84,10 +84,21 @@ function createLogoutContainer(logoutUrl) {
     return aElement;
 }
 
-function createContainer(url) {
+function createImageContainer(memepost) {
+    const divElement = document.createElement("div");
+    const h2Element = document.createElement("h2");
     const imgElement = document.createElement("img");
-    imgElement.src = url;
-    return imgElement;
+    const pElement = document.createElement("p");
+    
+    h2Element.innerText = memepost.author;
+    pElement.innerText = memepost.description;
+    imgElement.src = memepost.imageUrl;
+
+    divElement.appendChild(h2Element);
+    divElement.appendChild(imgElement);
+    divElement.appendChild(pElement);
+
+    return divElement;
 }
 
 /**

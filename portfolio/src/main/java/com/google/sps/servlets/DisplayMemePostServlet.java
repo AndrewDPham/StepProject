@@ -47,5 +47,5 @@ public class DisplayMemePostServlet extends HttpServlet {
         String json = gson.toJson(memePosts);
         response.setContentType("application/json");
         response.getWriter().println(json);
-  }
+    }
 }

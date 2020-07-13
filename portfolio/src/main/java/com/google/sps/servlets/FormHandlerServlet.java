@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.sps.data.Comment;
 import com.google.sps.data.MemePost;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 @WebServlet("/form-handler")
 public class FormHandlerServlet extends HttpServlet {
@@ -29,7 +31,10 @@ public class FormHandlerServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String description = request.getParameter("description-input");
         String imageUrl = getImageUrl(request, "image-input");
-        MemePost memePost = new MemePost("Test-Name", description, imageUrl);
+
+        UserService userService = UserServiceFactory.getUserService();
+        String userEmail = userService.getCurrentUser().getEmail();
+        MemePost memePost = new MemePost(userEmail, description, imageUrl);
         memePost.putInDatastore();
         response.sendRedirect("/image-upload.html");
     }
