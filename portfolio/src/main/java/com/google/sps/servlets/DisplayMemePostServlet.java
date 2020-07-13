@@ -18,11 +18,7 @@ import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import com.google.sps.data.MemePost;
 
-/**
- * When the fetch() function requests the /blobstore-upload-url URL, the content of the response is
- * the URL that allows a user to upload a file to Blobstore. If this sounds confusing, try running a
- * dev server and navigating to /blobstore-upload-url to see the Blobstore URL.
- */
+
 @WebServlet("/display-memepost")
 public class DisplayMemePostServlet extends HttpServlet {
 
@@ -47,5 +43,5 @@ public class DisplayMemePostServlet extends HttpServlet {
         String json = gson.toJson(memePosts);
         response.setContentType("application/json");
         response.getWriter().println(json);
-  }
+    }
 }

@@ -43,6 +43,18 @@ function grabComment(){
 }
 
 function fetchBlobstoreUrlAndDisplayMemePosts() {
+
+    fetch('/auth-status')
+        .then((response) => {
+            return response.json();
+        })
+        .then((status) => {
+            console.log(status);
+            const logoutElement = document.getElementById("logout-container");
+            logoutElement.appendChild(createListElement(status.userEmail));
+            logoutElement.appendChild(createLogoutContainer(status.logoutUrl));
+        });
+
     fetch('/blobstore-upload-url')
         .then((response) => {
             return response.text();
@@ -60,16 +72,39 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
             console.log(list);
             const memepostElement = document.getElementById("memepost-container");
             list.forEach((memepost) => {
-                memepostElement.appendChild(createContainer(memepost.imageUrl)); 
+                memepostElement.appendChild(createImageContainer(memepost)); 
             });
         });
-
 }
 
-function createContainer(url) {
+/**
+ * Creates an <a> element containing logout url.
+ */
+function createLogoutContainer(logoutUrl) {
+    const aElement = document.createElement("a");
+    aElement.href = logoutUrl;
+    aElement.innerText = "Logout Here";
+    return aElement;
+}
+
+/**
+ * Creates an <div> element containing the memepost.
+ */
+function createImageContainer(memepost) {
+    const divElement = document.createElement("div");
+    const h2Element = document.createElement("h2");
     const imgElement = document.createElement("img");
-    imgElement.src = url;
-    return imgElement;
+    const pElement = document.createElement("p");
+    
+    h2Element.innerText = memepost.author;
+    pElement.innerText = memepost.description;
+    imgElement.src = memepost.imageUrl;
+
+    divElement.appendChild(h2Element);
+    divElement.appendChild(imgElement);
+    divElement.appendChild(pElement);
+
+    return divElement;
 }
 
 /**
