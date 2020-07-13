@@ -43,6 +43,18 @@ function grabComment(){
 }
 
 function fetchBlobstoreUrlAndDisplayMemePosts() {
+
+    fetch('/auth-status')
+        .then((response) => {
+            return response.json();
+        })
+        .then((status) => {
+            console.log(status);
+            const logoutElement = document.getElementById("logout-container");
+            logoutElement.appendChild(createListElement(status.userEmail));
+            logoutElement.appendChild(createLogoutContainer(status.logoutUrl));
+        });
+
     fetch('/blobstore-upload-url')
         .then((response) => {
             return response.text();
@@ -63,7 +75,13 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
                 memepostElement.appendChild(createContainer(memepost.imageUrl)); 
             });
         });
+}
 
+function createLogoutContainer(logoutUrl) {
+    const aElement = document.createElement("a");
+    aElement.href = logoutUrl;
+    aElement.innerText = "Logout Here";
+    return aElement;
 }
 
 function createContainer(url) {
