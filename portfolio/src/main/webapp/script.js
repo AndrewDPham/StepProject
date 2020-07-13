@@ -77,6 +77,9 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
         });
 }
 
+/**
+ * Creates an <a> element containing logout url.
+ */
 function createLogoutContainer(logoutUrl) {
     const aElement = document.createElement("a");
     aElement.href = logoutUrl;
@@ -84,6 +87,9 @@ function createLogoutContainer(logoutUrl) {
     return aElement;
 }
 
+/**
+ * Creates an <div> element containing the memepost.
+ */
 function createImageContainer(memepost) {
     const divElement = document.createElement("div");
     const h2Element = document.createElement("h2");

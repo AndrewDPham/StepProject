@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
- 
+
+/** 
+ * The AuthStatusServlet gives authentication to image-upload.html
+ */ 
 @WebServlet("/auth-status")
 public class AuthStatusServlet extends HttpServlet {
  
@@ -19,14 +22,7 @@ public class AuthStatusServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         if (!userService.isUserLoggedIn()) {
             response.sendRedirect("/login-page");
-            // String userEmail = userService.getCurrentUser().getEmail();
-            // String urlToRedirectToAfterUserLogsOut = "/image-upload.html";
-            // String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
- 
-            // response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-            // response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
         } else {
-            // ArrayList<String> status = new ArrayList<>();
             String userEmail = userService.getCurrentUser().getEmail();
             String urlToRedirectToAfterUserLogsOut = "/login-page";
             String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);

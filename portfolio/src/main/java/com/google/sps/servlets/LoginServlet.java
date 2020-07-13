@@ -1,4 +1,4 @@
- package com.google.sps.servlets;
+package com.google.sps.servlets;
  
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
  
+/** 
+ * The LoginServlet gives authorization to image-upload.html
+ */  
 @WebServlet("/login-page")
 public class LoginServlet extends HttpServlet {
  
@@ -18,12 +21,6 @@ public class LoginServlet extends HttpServlet {
         UserService userService = UserServiceFactory.getUserService();
         if (userService.isUserLoggedIn()) {
             response.sendRedirect("/image-upload.html");
-            // String userEmail = userService.getCurrentUser().getEmail();
-            // String urlToRedirectToAfterUserLogsOut = "/image-upload.html";
-            // String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
- 
-            // response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-            // response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
         } else {
             String urlToRedirectToAfterUserLogsIn = "/image-upload.html";
             String urlBefore = "/index.html";

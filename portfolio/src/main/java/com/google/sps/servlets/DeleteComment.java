@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet responsible for deleting tasks. */
+/** 
+ * The AuthStatusServlet gives authorization to image-upload.html
+ */ 
 @WebServlet("/delete-comment")
 public class DeleteComment extends HttpServlet {
     
