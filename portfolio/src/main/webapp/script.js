@@ -16,17 +16,17 @@
 let coll = document.getElementsByClassName("collapse");
 let i;
 
-    for (i = 0; i < coll.length; i++) {
-        coll[i].addEventListener("click", function() {
-            this.classList.toggle("active");
-            let content = this.nextElementSibling;
-            if (content.style.display === "table") {
-                content.style.display = "none";
-            } else {
-                content.style.display = "table";
-            }
-        });
-    }
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "table") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "table";
+        }
+    });
+}
 
 /**
  * Grabs the comments from the JSP and displays as a list in HTML 
@@ -40,6 +40,36 @@ function grabComment(){
             commentElement.appendChild(createListElement(comment.name + " said " + comment.content)); 
         });
     });
+}
+
+function fetchBlobstoreUrlAndDisplayMemePosts() {
+    fetch('/blobstore-upload-url')
+        .then((response) => {
+            return response.text();
+        })
+        .then((imageUploadUrl) => {
+            const messageForm = document.getElementById('meme-form');
+            messageForm.action = imageUploadUrl;
+        });
+
+    fetch("/display-memepost")
+        .then((response) => {
+            return response.json();
+        })
+        .then((list) => {
+            console.log(list);
+            const memepostElement = document.getElementById("memepost-container");
+            list.forEach((memepost) => {
+                memepostElement.appendChild(createContainer(memepost.imageUrl)); 
+            });
+        });
+
+}
+
+function createContainer(url) {
+    const imgElement = document.createElement("img");
+    imgElement.src = url;
+    return imgElement;
 }
 
 /**

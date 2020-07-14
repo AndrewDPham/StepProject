@@ -28,6 +28,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.sps.data.Comment;
+import com.google.sps.data.MemePost;
+import com.google.sps.data.ResponseError;
 
 /** 
  * The DataServlet is the servlet which handles GET and POST requests to display 
@@ -60,35 +63,36 @@ public class DataServlet extends HttpServlet {
             comments.add(new Comment(name, content));
         }
 
-        Gson gson = new Gson();
-        String json = gson.toJson(comments);
+        // Gson gson = new Gson();
+        // String json = gson.toJson(comments);
         response.setContentType("application/json");
-        response.getWriter().println(json);
+        response.getWriter().println(convertToJsonUsingGson(comments));
     }
 
     /**
      * Obtain parameters of the HTML form and creates an entity in Datastore.
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = null;
-        String content = null;
-        boolean owo = false;
-        boolean uwu = false;
+        ArrayList<ResponseError> errors = new ArrayList<>();
+        String name = getParameter(request, "name-input", "");
+        String content = getParameter(request, "text-input", "");
+        boolean owo = getBooleanParameter(request, "owo", false);
+        boolean uwu = getBooleanParameter(request, "uwu", false);
+        DataServlet.numberOfShowedComments = getIntParameter(request, errors, "num-input", 3);
+        
+        String commentConcatenated = owoUwuTransformer(content, owo, uwu);
 
-        try {
-            name = getParameter(request, "name-input", "");
-            content = getParameter(request, "text-input", "");
-            owo = getBooleanParameter(request, "owo", false);
-            uwu = getBooleanParameter(request, "uwu", false);
-            DataServlet.numberOfShowedComments = getIntParameter(request, "num-input", 3);
-        } catch (NumberFormatException nfe) {
-            response.sendError(400, "Comment amount must be a number");
-            return;
-        } catch (Exception e){
-            response.sendError(500, "Error");
-            return;
+        if(errors.size() == 0){
+            Entity commentEntity = new Comment(name, commentConcatenated).toDatastoreEntity();
+            DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+            datastore.put(commentEntity);
+            response.sendRedirect("/index.html");
+        } else {
+            response.sendError(errors.get(0).getErrorCode(), errors.get(0).getDescription());
         }
+    }
 
+    public String owoUwuTransformer(String content, boolean owo, boolean uwu){
         String[] commentWords = content.split(" ", 0);
         String commentConcatenated = "";
         for(String word : commentWords){
@@ -96,17 +100,10 @@ public class DataServlet extends HttpServlet {
                 word += "owo";
             } else if (uwu){
                 word += "uwu";
-            } 
+            }
             commentConcatenated += word + " ";
         }
-
-        Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("name", name);
-        commentEntity.setProperty("content", commentConcatenated);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(commentEntity);
-
-        response.sendRedirect("/index.html");
+        return commentConcatenated;
     }
 
     /**
@@ -136,13 +133,27 @@ public class DataServlet extends HttpServlet {
      * @return the request parameter as an int, or the default value if the parameter
      *         was not specified by the client
      */
-    private int getIntParameter(HttpServletRequest request, String userValue, int defaultValue) {
+    private int getIntParameter(HttpServletRequest request, ArrayList<ResponseError> errors, String userValue, int defaultValue) throws IOException {
         String toParse = request.getParameter(userValue);
         if ("".equals(toParse) || toParse == null) {
             return defaultValue;
         }
-        int value = Integer.parseInt(toParse);
+        int value = defaultValue;
+        try{ 
+            value = Integer.parseInt(toParse);
+        } catch (NumberFormatException nfe) {
+            ResponseError error = new ResponseError("Must enter a number for the amount", 400);
+            errors.add(error);
+            return defaultValue;
+        } catch (Exception e){
+            ResponseError error = new ResponseError("Error", 500);
+            errors.add(error);
+            return defaultValue;
+        }    
         if (value < 0) {
+            if(defaultValue < 0){
+                return 0;
+            }
             return defaultValue;
         }
         return value;
@@ -153,11 +164,10 @@ public class DataServlet extends HttpServlet {
      *         was not specified by the client
      */
     private Boolean getBooleanParameter(HttpServletRequest request, String userValue, boolean defaultValue) {
-        Boolean value = defaultValue;
-        value = Boolean.parseBoolean(request.getParameter(userValue));
-        if (value == null) {
+        String toParse = request.getParameter(userValue);
+        if (toParse == null) {
             return defaultValue;
         }
-        return value;
+        return Boolean.parseBoolean(toParse);
     }
 }
