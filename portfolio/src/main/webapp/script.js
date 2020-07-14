@@ -48,7 +48,7 @@ function fetchBlobstoreUrlAndDisplayMemePosts() {
             return response.text();
         })
         .then((imageUploadUrl) => {
-            const messageForm = document.getElementById('my-form');
+            const messageForm = document.getElementById('meme-form');
             messageForm.action = imageUploadUrl;
         });
 

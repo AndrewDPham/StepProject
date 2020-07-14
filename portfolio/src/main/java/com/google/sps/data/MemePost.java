@@ -15,7 +15,6 @@ public class MemePost{
     private String imageUrl;
     private long likes;
     private long dislikes;
-    // private Date date;
     
     public MemePost(String author, String description, String imageUrl){
         this.author = author;
@@ -23,7 +22,6 @@ public class MemePost{
         this.imageUrl = imageUrl;
         this.likes = 0;
         this.dislikes = 0;
-        // this.Date = new Date();
     }
 
     public MemePost(String author, String description, String imageUrl, long likes, long dislikes, Date date){
@@ -32,7 +30,6 @@ public class MemePost{
         this.imageUrl = imageUrl;
         this.likes = likes;
         this.dislikes = dislikes;
-        // this.Date = date;
     }
 
     public String getAuthor(){
@@ -74,7 +71,6 @@ public class MemePost{
         memePostEntity.setProperty("imageUrl", this.imageUrl);
         memePostEntity.setProperty("likes", this.likes);
         memePostEntity.setProperty("dislikes", this.dislikes);
-        // memePostEntity.setProperty("date", this.date)
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(memePostEntity);
     }

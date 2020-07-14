@@ -30,6 +30,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.sps.data.Comment;
 import com.google.sps.data.MemePost;
+import com.google.sps.data.ResponseError;
 
 /** 
  * The DataServlet is the servlet which handles GET and POST requests to display 
@@ -72,7 +73,7 @@ public class DataServlet extends HttpServlet {
      * Obtain parameters of the HTML form and creates an entity in Datastore.
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ArrayList<Integer> errors = new ArrayList<>();
+        ArrayList<ResponseError> errors = new ArrayList<>();
         String name = getParameter(request, "name-input", "");
         String content = getParameter(request, "text-input", "");
         boolean owo = getBooleanParameter(request, "owo", false);
@@ -89,7 +90,7 @@ public class DataServlet extends HttpServlet {
             datastore.put(commentEntity);
             response.sendRedirect("/index.html");
         } else {
-            response.sendError(errors.get(0));
+            response.sendError(errors.get(0).getErrorCode(), errors.get(0).getDescription());
         }
     }
 
@@ -134,7 +135,7 @@ public class DataServlet extends HttpServlet {
      * @return the request parameter as an int, or the default value if the parameter
      *         was not specified by the client
      */
-    private int getIntParameter(HttpServletRequest request, ArrayList<Integer> errors, String userValue, int defaultValue) throws IOException {
+    private int getIntParameter(HttpServletRequest request, ArrayList<ResponseError> errors, String userValue, int defaultValue) throws IOException {
         String toParse = request.getParameter(userValue);
         if ("".equals(toParse) || toParse == null) {
             return defaultValue;
@@ -143,10 +144,12 @@ public class DataServlet extends HttpServlet {
         try{ 
             value = Integer.parseInt(toParse);
         } catch (NumberFormatException nfe) {
-            errors.add(400);
+            ResponseError error = new ResponseError("Must enter a number for the amount", 400);
+            errors.add(error);
             return defaultValue;
         } catch (Exception e){
-            errors.add(500);
+            ResponseError error = new ResponseError("Error", 500);
+            errors.add(error);
             return defaultValue;
         }    
         if (value < 0) {
