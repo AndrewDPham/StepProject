@@ -1,7 +1,5 @@
 package com.google.sps.data;
 
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import java.util.Date;
 
@@ -24,7 +22,15 @@ public class MemePost{
         this.dislikes = 0;
     }
 
-    public MemePost(String author, String description, String imageUrl, long likes, long dislikes, Date date){
+    public MemePost(Entity entity){
+        this.author = (String) entity.getProperty("author");
+        this.description = (String) entity.getProperty("description");
+        this.imageUrl = (String) entity.getProperty("imageUrl");
+        this.likes = 0;
+        this.dislikes = 0;
+    }
+
+    public MemePost(String author, String description, String imageUrl, long likes, long dislikes){
         this.author = author;
         this.description = description;
         this.imageUrl = imageUrl;
@@ -64,15 +70,14 @@ public class MemePost{
         this.dislikes--;
     }
 
-    public void putInDatastore(){
+    public Entity toDatastoreEntity(){
         Entity memePostEntity = new Entity("MemePost");
         memePostEntity.setProperty("author", this.author);
         memePostEntity.setProperty("description", this.description);
         memePostEntity.setProperty("imageUrl", this.imageUrl);
         memePostEntity.setProperty("likes", this.likes);
         memePostEntity.setProperty("dislikes", this.dislikes);
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(memePostEntity);
+        return memePostEntity;
     }
 
 }

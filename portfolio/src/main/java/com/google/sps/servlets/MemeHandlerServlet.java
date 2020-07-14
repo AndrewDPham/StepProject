@@ -19,25 +19,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.sps.data.Comment;
 import com.google.sps.data.MemePost;
 
-@WebServlet("/form-handler")
-public class FormHandlerServlet extends HttpServlet {
+@WebServlet("/meme-handler")
+public class MemeHandlerServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String description = request.getParameter("description-input");
-        String imageUrl = getImageUrl(request, "image-input");
+        String imageUrl = getImageUrl(request);
         MemePost memePost = new MemePost("Test-Name", description, imageUrl);
-        memePost.putInDatastore();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(memePost.toDatastoreEntity());
         response.sendRedirect("/image-upload.html");
     }
 
     /**
     * Returns a valid image url string  
     */
-    public String getImageUrl(HttpServletRequest request, String formName) throws IOException{
+    public String getImageUrl(HttpServletRequest request) throws IOException {
         BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
         Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
         List<BlobKey> blobKeys = blobs.get("image-input");

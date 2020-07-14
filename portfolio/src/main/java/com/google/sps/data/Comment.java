@@ -1,5 +1,7 @@
 package com.google.sps.data;
 
+import com.google.appengine.api.datastore.Entity;
+
 /**
  * The Comment class holds the user's comments
  */
@@ -29,4 +31,10 @@ public class Comment{
         this.content = newContent;
     }
 
+    public Entity toDatastoreEntity(){
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("name", name);
+        commentEntity.setProperty("content", content);
+        return commentEntity;
+    }
 }

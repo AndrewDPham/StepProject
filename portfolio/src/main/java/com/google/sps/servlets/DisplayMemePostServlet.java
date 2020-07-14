@@ -30,17 +30,13 @@ public class DisplayMemePostServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ArrayList<MemePost> memePosts = new ArrayList<>();
 
+        MemePost memePost = null;
         Query query = new Query("MemePost");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
         for (Entity entity : results.asIterable()) {
-            String author = (String) entity.getProperty("author");
-            String description = (String) entity.getProperty("description");
-            String imageUrl = (String) entity.getProperty("imageUrl");
-            // long likes = entity.getProperty("likes");
-            // long dislikes =  entity.getProperty("dislikes");
-            // Date date = (Date) entity.getProperty("date");
-            memePosts.add(new MemePost(author, description, imageUrl));
+            memePost = new MemePost(entity);
+            memePosts.add(memePost);
         }
 
         Gson gson = new Gson();

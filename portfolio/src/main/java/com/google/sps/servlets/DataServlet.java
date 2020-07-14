@@ -83,9 +83,7 @@ public class DataServlet extends HttpServlet {
         String commentConcatenated = owoUwuTransformer(content, owo, uwu);
 
         if(errors.size() == 0){
-            Entity commentEntity = new Entity("Comment");
-            commentEntity.setProperty("name", name);
-            commentEntity.setProperty("content", commentConcatenated);
+            Entity commentEntity = new Comment(name, commentConcatenated).toDatastoreEntity();
             DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
             datastore.put(commentEntity);
             response.sendRedirect("/index.html");
@@ -153,6 +151,9 @@ public class DataServlet extends HttpServlet {
             return defaultValue;
         }    
         if (value < 0) {
+            if(defaultValue < 0){
+                return 0;
+            }
             return defaultValue;
         }
         return value;
@@ -164,7 +165,7 @@ public class DataServlet extends HttpServlet {
      */
     private Boolean getBooleanParameter(HttpServletRequest request, String userValue, boolean defaultValue) {
         String toParse = request.getParameter(userValue);
-        if (toParse == null || !("true".equals(toParse.toLowerCase()))) {
+        if (toParse == null) {
             return defaultValue;
         }
         return Boolean.parseBoolean(toParse);
