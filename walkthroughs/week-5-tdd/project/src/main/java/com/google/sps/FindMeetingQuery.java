@@ -48,6 +48,30 @@ public final class FindMeetingQuery {
             return timeRanges;
         }
 
+        for(int i = 0; i < attendeeRelevantTimeRanges.size(); i++){
+        
+            if(current.contains(attendeeRelevantTimeRanges.get(i))){
+                continue;
+            }
+
+            if(current.overlaps(attendeeRelevantTimeRanges.get(i))){
+                current = attendeeRelevantTimeRanges.get(i);
+                continue;                
+            }    
+
+            toAdd = TimeRange.fromStartEnd(current.end(), attendeeRelevantTimeRanges.get(i).start(), false);
+            if(toAdd.duration() >= request.getDuration()){
+                timeRanges.add(toAdd);
+            }
+            current = attendeeRelevantTimeRanges.get(i);
+
+        }
+        //Add from the latest meeting to the end of the day if duration is valid
+        toAdd = TimeRange.fromStartEnd(current.end(), TimeRange.END_OF_DAY, true);
+        if(toAdd.duration() >= request.getDuration()){
+            timeRanges.add(toAdd);
+        }
+
         //Add from the beginning of the day until start of first meeting if duration is valid
         TimeRange current = attendeeRelevantTimeRanges.get(0);
         TimeRange toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
