@@ -1,4 +1,3 @@
-
 // Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,14 +22,12 @@ import java.util.Set;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        // throw new UnsupportedOperationException("TODO: Implement this method.");
-
         Collection<TimeRange> timeRanges = new ArrayList<TimeRange>();
-
         List<TimeRange> attendeeRelevantTimeRanges = new ArrayList<TimeRange>();
         Collection<String> requestAttendees = request.getAttendees(); 
         Collection<String> eventAttendees;
 
+        // Add the TimeRanges of events into a List that are relevant to the request's attendees 
         for(Event event : events){
 	        eventAttendees = event.getAttendees(); 
 	        if(!Collections.disjoint(requestAttendees, eventAttendees)){
@@ -38,8 +35,13 @@ public final class FindMeetingQuery {
             }
         }
         
+        // Sort the List so that TimeRanges are ordered by when they start
         Collections.sort(attendeeRelevantTimeRanges, TimeRange.ORDER_BY_START);
 
+        /** 
+         * Check edge cases: Check if duration of request is valid and check if there are 
+         * any relevant time ranges that affect the request.
+         */
         if(attendeeRelevantTimeRanges.size() == 0){
             if(request.getDuration() > TimeRange.WHOLE_DAY.duration()){
                 return timeRanges;
@@ -48,8 +50,19 @@ public final class FindMeetingQuery {
             return timeRanges;
         }
 
+        // Add a TimeRange with a range from the beginning of the day until start of first event if duration is valid
+        TimeRange current = attendeeRelevantTimeRanges.get(0);
+        TimeRange toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
+        if(toAdd.duration() >= request.getDuration()){
+                timeRanges.add(toAdd);
+        }
+
+        /**  
+         * Check if the current TimeRange has overlap or contains another TimeRange.
+         * The current TimeRange reflects the tail of a group of overlapped & contained events. Add TimeRanges
+         * where there are gaps between the tail event and the next non-overlapped & non-contained event.
+         */
         for(int i = 0; i < attendeeRelevantTimeRanges.size(); i++){
-        
             if(current.contains(attendeeRelevantTimeRanges.get(i))){
                 continue;
             }
@@ -64,62 +77,14 @@ public final class FindMeetingQuery {
                 timeRanges.add(toAdd);
             }
             current = attendeeRelevantTimeRanges.get(i);
-
         }
-        //Add from the latest meeting to the end of the day if duration is valid
+
+        // Add a TimeRange with a range from the end of the latest event to the end of the day if duration is valid
         toAdd = TimeRange.fromStartEnd(current.end(), TimeRange.END_OF_DAY, true);
         if(toAdd.duration() >= request.getDuration()){
             timeRanges.add(toAdd);
         }
 
-        //Add from the beginning of the day until start of first meeting if duration is valid
-        TimeRange current = attendeeRelevantTimeRanges.get(0);
-        TimeRange toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
-        if(toAdd.duration() >= request.getDuration()){
-                timeRanges.add(toAdd);
-        }
-        
-        
-        
-
         return timeRanges;
     }
 }
-
-        
-
-	        // if( i == 0 ){
-		    //     timeRanges.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, attendeeRelevantTimeRanges.get(0).start(), false));
-	        // }
- 
-	        // if( i == attendeeRelevantTimeRanges.size() - 1){
-		    //     timeRanges.add(TimeRange.fromStartEnd(attendeeRelevantTimeRanges.get(attendeeRelevantTimeRanges.size() - 1).end(), TimeRange.END_OF_DAY, true));
-            // }
-
-
-
-
-//   Event Schema:
-//   private final String title;
-//   private final TimeRange;
-//   private final Set<String> attendees = new HashSet<>();
- 
-//   MeetingRequest Schema:
-//   private final Collection<String> attendees = new HashSet<>();
-//   private final Collection<String> optional_attendees = new HashSet<>();
-//   private final long duration;
- 
-//   TimeRange Schema:
-//   private final int start;
-//   private final int duration;
- 
-// Check for conflict;
-
-
-
-/*
-    Iterate through events
-    
-
-    Add time range
-*/
