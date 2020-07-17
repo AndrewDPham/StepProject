@@ -24,13 +24,10 @@ public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
         Collection<TimeRange> timeRanges = new ArrayList<TimeRange>();
         List<TimeRange> attendeeRelevantTimeRanges = new ArrayList<TimeRange>();
-        Collection<String> requestAttendees = request.getAttendees(); 
-        Collection<String> eventAttendees;
 
         // Add the TimeRanges of events into a List that are relevant to the request's attendees 
         for(Event event : events){
-	        eventAttendees = event.getAttendees(); 
-	        if(!Collections.disjoint(requestAttendees, eventAttendees)){
+	        if(!Collections.disjoint(request.getAttendees(), event.getAttendees())){
 	            attendeeRelevantTimeRanges.add(event.getWhen());
             }
         }
@@ -62,21 +59,22 @@ public final class FindMeetingQuery {
          * The current TimeRange reflects the tail of a group of overlapped & contained events. Add TimeRanges
          * where there are gaps between the tail event and the next non-overlapped & non-contained event.
          */
-        for(int i = 0; i < attendeeRelevantTimeRanges.size(); i++){
-            if(current.contains(attendeeRelevantTimeRanges.get(i))){
+
+        for(TimeRange timeRange: attendeeRelevantTimeRanges) {
+            if(current.contains(timeRange)){
                 continue;
             }
 
-            if(current.overlaps(attendeeRelevantTimeRanges.get(i))){
-                current = attendeeRelevantTimeRanges.get(i);
-                continue;                
-            }    
+            if(current.overlaps(timeRange)){
+                current = timeRange;
+                continue;
+            }
 
-            toAdd = TimeRange.fromStartEnd(current.end(), attendeeRelevantTimeRanges.get(i).start(), false);
+            toAdd = TimeRange.fromStartEnd(current.end(), timeRange.start(), false);
             if(toAdd.duration() >= request.getDuration()){
                 timeRanges.add(toAdd);
             }
-            current = attendeeRelevantTimeRanges.get(i);
+            current = timeRange;
         }
 
         // Add a TimeRange with a range from the end of the latest event to the end of the day if duration is valid
