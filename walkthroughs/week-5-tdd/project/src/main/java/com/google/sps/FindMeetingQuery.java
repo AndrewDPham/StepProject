@@ -27,53 +27,55 @@ public final class FindMeetingQuery {
         List<TimeRange> optionalAttendeeRelevantTimeRanges = new ArrayList<TimeRange>();
 
         // Add the TimeRanges of events into a List that are relevant to the request's attendees 
-        for(Event event : events){
-	        if(!Collections.disjoint(request.getAttendees(), event.getAttendees())){
-	            attendeeRelevantTimeRanges.add(event.getWhen());
-            }
-            else if (!Collections.disjoint(request.getOptionalAttendees(), event.getAttendees())){
+        for (Event event: events) {
+            if (!Collections.disjoint(request.getAttendees(), event.getAttendees())) {
+                attendeeRelevantTimeRanges.add(event.getWhen());
+            } else if (!Collections.disjoint(request.getOptionalAttendees(), event.getAttendees())) {
                 optionalAttendeeRelevantTimeRanges.add(event.getWhen());
             }
         }
-        
+
         /** 
          * Check edge cases: Check if duration of request is valid and check if there are 
          * any relevant time ranges that affect the request.
          */
-        if(request.getDuration() > TimeRange.WHOLE_DAY.duration()){
+        if (request.getDuration() > TimeRange.WHOLE_DAY.duration()) {
             return timeRanges;
         }
-        if(attendeeRelevantTimeRanges.size() == 0 && optionalAttendeeRelevantTimeRanges.size() == 0){
+        if (attendeeRelevantTimeRanges.size() == 0 && optionalAttendeeRelevantTimeRanges.size() == 0) {
             timeRanges.add(TimeRange.WHOLE_DAY);
             return timeRanges;
         }
-        
+
         // Sort the List so that TimeRanges are ordered by when they start
         Collections.sort(attendeeRelevantTimeRanges, TimeRange.ORDER_BY_START);
         Collections.sort(optionalAttendeeRelevantTimeRanges, TimeRange.ORDER_BY_START);
 
-        // Add a TimeRange with a range from the beginning of the day until start of first event if duration is valid
         TimeRange current;
-        if(attendeeRelevantTimeRanges.size() == 0){
+        TimeRange toAdd;
+
+        // Case by case basis on whether to add mandatory or optional attendees
+        if (attendeeRelevantTimeRanges.size() == 0) {
             current = optionalAttendeeRelevantTimeRanges.get(0);
 
-            TimeRange toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
-            if(toAdd.duration() >= request.getDuration()){
+            // Add a TimeRange with a range from the beginning of the day until start of first event if duration is valid
+            toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
+            if (toAdd.duration() >= request.getDuration()) {
                 timeRanges.add(toAdd);
             }
 
-            for(TimeRange timeRange: optionalAttendeeRelevantTimeRanges){
-                if(current.contains(timeRange)){
+            for (TimeRange timeRange: optionalAttendeeRelevantTimeRanges) {
+                if (current.contains(timeRange)) {
                     continue;
                 }
 
-                if(current.overlaps(timeRange)){
+                if (current.overlaps(timeRange)) {
                     current = timeRange;
                     continue;
                 }
 
                 toAdd = TimeRange.fromStartEnd(current.end(), timeRange.start(), false);
-                if(toAdd.duration() >= request.getDuration()){
+                if (toAdd.duration() >= request.getDuration()) {
                     timeRanges.add(toAdd);
                 }
                 current = timeRange;
@@ -81,49 +83,47 @@ public final class FindMeetingQuery {
 
             // Add a TimeRange with a range from the end of the latest event to the end of the day if duration is valid
             toAdd = TimeRange.fromStartEnd(current.end(), TimeRange.END_OF_DAY, true);
-            if(toAdd.duration() >= request.getDuration()){
+            if (toAdd.duration() >= request.getDuration()) {
                 timeRanges.add(toAdd);
             }
 
         } else {
             current = attendeeRelevantTimeRanges.get(0);
 
-            TimeRange toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
-            if(toAdd.duration() >= request.getDuration()){
+            toAdd = TimeRange.fromStartEnd(TimeRange.START_OF_DAY, current.start(), false);
+            if (toAdd.duration() >= request.getDuration()) {
                 timeRanges.add(toAdd);
             }
-
-            for(TimeRange timeRange: attendeeRelevantTimeRanges) {
-                if(current.contains(timeRange)){
+            
+            for (TimeRange timeRange: attendeeRelevantTimeRanges) {
+                if (current.contains(timeRange)) {
                     continue;
                 }
 
-                if(current.overlaps(timeRange)){
+                if (current.overlaps(timeRange)) {
                     current = timeRange;
                     continue;
                 }
 
                 toAdd = TimeRange.fromStartEnd(current.end(), timeRange.start(), false);
-                if(toAdd.duration() >= request.getDuration()){
+                if (toAdd.duration() >= request.getDuration()) {
                     timeRanges.add(toAdd);
                 }
                 current = timeRange;
             }
 
             toAdd = TimeRange.fromStartEnd(current.end(), TimeRange.END_OF_DAY, true);
-            if(toAdd.duration() >= request.getDuration()){
+            if (toAdd.duration() >= request.getDuration()) {
                 timeRanges.add(toAdd);
             }
 
             List<TimeRange> timeRangesWithNoOptionalInterference = new ArrayList<TimeRange>();
-            
-            System.out.println("timeRanges: " + timeRanges);
-            System.out.println("optional: " + optionalAttendeeRelevantTimeRanges);
 
-            for(int i = timeRanges.size() - 1; i >= 0; i--){
-                for(TimeRange timeRange : optionalAttendeeRelevantTimeRanges){
+            // Goes through current timeRanges and removes meetings where optionalAttendees can't attend
+            for (int i = timeRanges.size() - 1; i >= 0; i--) {
+                for (TimeRange timeRange: optionalAttendeeRelevantTimeRanges) {
                     System.out.println(timeRanges.get(i).start() + " " + timeRanges.get(i).end() + " | " + timeRange.start() + " " + timeRange.end());
-                    if(timeRange.overlaps(timeRanges.get(i)) || timeRange.contains(timeRanges.get(i))){
+                    if (timeRange.overlaps(timeRanges.get(i)) || timeRange.contains(timeRanges.get(i))) {
                         timeRangesWithNoOptionalInterference.add(timeRanges.get(i));
                         System.out.println(timeRangesWithNoOptionalInterference + "HERE");
                         timeRanges.remove(timeRanges.get(i));
@@ -131,9 +131,9 @@ public final class FindMeetingQuery {
                     }
                 }
             }
-
-            if(timeRanges.size() == 0){
-                System.out.println("HERE");
+            
+            // If all optionalAttendees are busy, return normal schedule for mandatory attendees
+            if (timeRanges.size() == 0) {
                 Collections.sort(timeRangesWithNoOptionalInterference, TimeRange.ORDER_BY_START);
                 return timeRangesWithNoOptionalInterference;
             }
