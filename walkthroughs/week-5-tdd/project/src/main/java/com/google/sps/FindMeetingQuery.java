@@ -22,15 +22,12 @@ import java.util.Set;
 
 public final class FindMeetingQuery {
     public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-        Collection<TimeRange> timeRanges = new ArrayList<TimeRange>();
+        ArrayList<TimeRange> timeRanges = new ArrayList<TimeRange>();
         List<TimeRange> attendeeRelevantTimeRanges = new ArrayList<TimeRange>();
-        Collection<String> requestAttendees = request.getAttendees(); 
-        Collection<String> eventAttendees;
 
         // Add the TimeRanges of events into a List that are relevant to the request's attendees 
         for(Event event : events){
-	        eventAttendees = event.getAttendees(); 
-	        if(!Collections.disjoint(requestAttendees, eventAttendees)){
+	        if(!Collections.disjoint(request.getAttendees(), event.getAttendees())){
 	            attendeeRelevantTimeRanges.add(event.getWhen());
             }
         }
